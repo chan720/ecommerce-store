@@ -1,0 +1,30 @@
+<h1>Products</h1>
+
+<%= link_to 'New Product', new_product_path, class: 'btn btn-primary' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= number_to_currency(product.price) %></td>
+        <td><%= truncate(product.description, length: 50) %></td>
+        <td><%= product.category.name if product.category %></td>
+        <td>
+          <%= link_to 'Show', product_path(product), class: 'btn btn-info' %>
+          <%= link_to 'Edit', edit_product_path(product), class: 'btn btn-warning' %>
+          <%= link_to 'Destroy', product_path(product), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,43 @@
+<h2>Your Cart</h2>
+
+<table>
+    <% if @cart.cart_items.any? %>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total Price</th>
+     
+    </tr>
+  </thead>
+   <tbody>
+      <% @cart.cart_items.each do |item| %>
+    <tr>
+        <td><%= item.product.name %></td> 
+         <td>
+          <%= item.quantity %>
+          <%= button_to '+', increase_cart_item_path(item), method: :patch, class: 'btn btn-success' %>
+          <%= button_to '-', decrease_cart_item_path(item), method: :patch, class: 'btn btn-danger' %>
+        </td>
+        <td><%= item.product.price %></td>
+        <td><%= item.total_price%></td> 
+    </tr>
+    <% end %>
+    <td><h4>Total Bill</h4></td>
+      <td></td>
+      <td></td>
+      <td><h4><%= number_to_currency(@cart_items.sum { |item| item.quantity * item.product.price }) %></h4></td>  
+   
+
+    <% else %>
+  <p>Your cart is empty.</p>
+<% end %>
+</table>
+ <%# <h2>Total Bill: <%= number_to_currency(@cart_items.sum { |item| item.quantity * item.product.price })</h2> %>
+<%= link_to 'Back', products_path, class: 'btn btn-secondary' %>
+
+
+
+
+

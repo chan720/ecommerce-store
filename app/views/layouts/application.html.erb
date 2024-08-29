@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Ecommerce Store" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
+
+
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><%= link_to 'Home', root_path %></li>
+          <li><%= link_to 'All Products', products_path %></li>
+          <li><%= link_to 'Cart', cart_path %></li>
+        </ul>
+      </nav>
+    </header>
+    
+   <% if user_signed_in? %>
+  <% if current_user.admin? %>
+    <%= link_to 'Manage Products', admin_products_path %>
+    <%= link_to 'Manage Categories', admin_categories_path %>
+
+  <% end %>
+<% else %>
+  <%= link_to 'Login', new_user_session_path %> |
+  <%= link_to 'Sign Up', new_user_registration_path %>
+<% end %>
+<%= yield %>
+  </body>
+</html>
